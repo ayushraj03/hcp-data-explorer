@@ -1,0 +1,53 @@
+:root {
+  /* Tenant-themeable (see theme/ThemeProvider.tsx — overwritten at runtime
+     from the resolved, validated TenantTheme). Defaults here match
+     DEFAULT_THEME so there's no flash of unstyled content before mount. */
+  --color-primary: #0b5fa5;
+  --color-on-primary: #ffffff;
+  --color-background: #ffffff;
+  --color-surface: #f2f5f8;
+  --color-text: #16202e;
+  --radius: 8px;
+
+  /* Fixed semantic palette — deliberately NOT themeable. Edit-lifecycle
+     states must stay legible under every tenant brand (FR-8), so they are
+     a separate layer from --color-primary/etc. See ASSUMPTIONS.md. */
+  --state-pending-bg: #eef3fc;
+  --state-pending-border: #6d9fd8;
+  --state-rejected-bg: #fdecec;
+  --state-rejected-border: #d64545;
+  --state-rejected-text: #a01f1f;
+  --state-saved-bg: #e8f7ee;
+  --state-saved-border: #3fa35a;
+  --state-over-cap: #b5690a;
+  --state-null: #a01f1f;
+  --state-zero: #8a93a3;
+  --state-flash: #fff3c4;
+
+  --border: #dfe4ea;
+  --text-muted: #5a6472;
+
+  color-scheme: light;
+  font: 14px/1.4 system-ui, "Segoe UI", Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+#root {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}

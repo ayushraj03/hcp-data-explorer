@@ -1,0 +1,350 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 16px;
+}
+
+.app__header {
+  padding: 16px 4px 8px;
+}
+
+.app__header h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 650;
+  color: var(--color-primary);
+}
+
+.app__grid {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+/* ---------------------------------------------------------------- Toolbar */
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.toolbar__group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.toolbar button,
+.toolbar select,
+.search-input {
+  border: 1px solid var(--border);
+  background: var(--color-background);
+  color: var(--color-text);
+  border-radius: var(--radius);
+  padding: 6px 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.search-input {
+  cursor: text;
+  min-width: 220px;
+}
+
+.toolbar button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.toolbar button:not(:disabled):hover {
+  border-color: var(--color-primary);
+}
+
+.toolbar__badge {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 0 4px;
+}
+
+.tenant-switcher {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ------------------------------------------------------------- Virtual grid */
+
+.virtual-grid {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.virtual-grid__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.grid-row {
+  display: grid;
+  grid-template-columns: var(--grid-cols);
+  align-items: center;
+  height: 100%;
+}
+
+.cell {
+  padding: 0 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  border: none;
+  background: transparent;
+  text-align: left;
+}
+
+.cell--right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.cell--null {
+  color: var(--state-null);
+  font-style: italic;
+}
+
+.cell--zero {
+  color: var(--state-zero);
+}
+
+/* -------------------------------------------------------------- Header row */
+
+.header-row {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  /* Direct flex child of .virtual-grid (not inside the virtualizer's
+     absolutely-positioned row wrapper) — the inherited `.grid-row { height:
+     100% }` would otherwise resolve against the whole grid's height and
+     swallow all the space meant for the scrollable body below it. */
+  height: auto;
+  flex: 0 0 auto;
+}
+
+.header-cell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 10px;
+}
+
+.header-cell.cell--right {
+  justify-content: flex-end;
+}
+
+.header-cell:disabled {
+  cursor: default;
+}
+
+.header-cell--active {
+  color: var(--color-primary);
+}
+
+.header-cell__dir {
+  font-size: 10px;
+}
+
+/* --------------------------------------------------------------- Data rows */
+
+.data-row {
+  border-bottom: 1px solid var(--border);
+}
+
+.data-row:hover {
+  background: var(--color-surface);
+}
+
+.data-row--flash {
+  animation: row-flash 1.4s ease-out;
+}
+
+@keyframes row-flash {
+  0% {
+    background: var(--state-flash);
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+/* -------------------------------------------------------------- Group rows */
+
+.group-row {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.group-row--region {
+  font-size: 13px;
+}
+
+.group-row--territory {
+  font-size: 12.5px;
+  font-weight: 500;
+  padding-left: 14px;
+}
+
+.group-row--territory .group-row__label {
+  padding-left: 22px;
+}
+
+.group-row__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chevron {
+  display: inline-block;
+  transition: transform 0.15s ease;
+  font-size: 9px;
+  color: var(--color-primary);
+}
+
+.chevron--open {
+  transform: rotate(90deg);
+}
+
+.group-row__count {
+  font-weight: 400;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.group-row__agg {
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------ Calls cell */
+
+.cell--calls {
+  width: 100%;
+  border-radius: calc(var(--radius) * 0.6);
+  cursor: pointer;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  padding: 4px 8px;
+}
+
+.cell--calls:hover {
+  background: var(--color-surface);
+}
+
+.cell--pending {
+  background: var(--state-pending-bg);
+  border: 1px solid var(--state-pending-border);
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.cell__spinner {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 2px solid var(--state-pending-border);
+  border-top-color: transparent;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cell--rejected {
+  background: var(--state-rejected-bg);
+  border: 1px solid var(--state-rejected-border);
+  color: var(--state-rejected-text);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.cell__reject-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--state-rejected-border);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.cell--editing {
+  width: 100%;
+  text-align: right;
+  border: 1px solid var(--color-primary);
+  border-radius: calc(var(--radius) * 0.6);
+  padding: 3px 8px;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.cell--saved-flash {
+  background: var(--state-saved-bg);
+  border: 1px solid var(--state-saved-border);
+  transition: background 1s ease, border-color 1s ease;
+}
+
+.cell--over-cap {
+  color: var(--state-over-cap);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------- Footer */
+
+.footer {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 8px 4px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+}
